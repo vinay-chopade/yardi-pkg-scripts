@@ -1,0 +1,15 @@
+//NOTES
+Script Name	: Pkg_Data_Fix_Case19100649.pkg
+Client Name	: Weinstein Management Co., Inc.
+Client PIN	: 100054166
+Created By	: Vinay C
+Date		: 9/1/2026
+Case		: 19100649
+Description	: The package will delete duplicate Concession.
+/* Package is case specific */
+//END NOTES
+
+//SQL
+Delete from SpecialsXRef where hSpecial = 57249 and hmy = 125461
+and hprospect = 1904194
+//END SQL

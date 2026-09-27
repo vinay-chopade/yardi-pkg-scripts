@@ -1,0 +1,53 @@
+//NOTES
+Script Name	: Pkg_Data_Fix_Case19242873.pkg
+Client Name	: Paragon Properties
+Client PIN	: 100036957
+Created By	: Vinay C
+Date		: 9/24/2026
+Case		: 19242873
+Description	: Package will remove the canceled record data from the unit.
+/* Package is case specific */
+//END NOTES
+
+//SQL
+UPDATE Prospect
+SET htenant = 0,
+hunit=NULL,
+Hunittype=0
+WHERE hmy = 729323
+AND htenant = 218573
+AND scode = 'p0691684'
+
+UPDATE Prospect
+SET hparent=0
+WHERE hmy = 729153
+AND htenant = 218514
+AND scode = 'p0691511'
+ 
+UPDATE Tenant
+SET hprospect = 0
+WHERE hmyperson = 218573
+AND scode = 't0105317'
+AND hprospect = 729323
+
+delete unit_status 
+WHERE hunit=909 and hmy in (559120, 559058)
+
+Update unit_status
+set 
+dtend=null,
+dtmovein='10/3/2026 12:00:00 AM',
+dtLeaseFrom='10/3/2026 12:00:00 AM',	
+dtLeaseTo='11/30/2027 12:00:00 AM'
+where hmy=559029 and hunit=909 and htent=218514
+
+Update  U 
+Set     u.sstatus     = us.sstatus,
+        u.dtready     = us.dtReady,
+        u.dtavailable = us.dtAvailable,
+        u.dtvacant    = us.dtVacant,
+        u.irentready  = us.iRentReady
+from Unit U
+inner join Unit_status US on Us.hunit = U.hmy
+where u.scode = '23124-2P' and u.hmy = 909 and Us.dtend is null
+//END SQL
