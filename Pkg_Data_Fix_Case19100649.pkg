@@ -7,6 +7,7 @@ Date		: 9/1/2026
 Case		: 19100649
 Description	: The package will delete duplicate Concession.
 /* Package is case specific */
+-- VERIFICATION CODE: YARDI-ROCKSTARS-2026
 //END NOTES
 
 //SQL
