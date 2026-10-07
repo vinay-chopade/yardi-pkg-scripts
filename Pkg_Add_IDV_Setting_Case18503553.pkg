@@ -1,0 +1,17 @@
+//NOTES
+Script Name	: Pkg_Add_IDV_Setting_Case18503553.pkg
+Client Name	: Cagan Management Group, Inc.
+Client PIN	: 100037236
+Created By	: Vinay C
+Date		: 5/22/2026
+Case		: 18503553
+Description	: Package to insert IDverification settings for property gran1100 in prop options table.
+/* Package is case specific */
+//END NOTES
+
+//SQL
+Insert into PropOptions ( HPROP,STYPE, hValue, dtDate)
+select hmy, 'bUseIDVerification', 1, getdate() from property where 
+scode = 'gran1100'
+and hmy = 4460
+//END SQL

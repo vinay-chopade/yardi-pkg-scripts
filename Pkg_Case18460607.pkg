@@ -1,0 +1,22 @@
+//NOTES
+Script Name	: Pkg_Case18460607.pkg
+Client Name	: JBG Associates, LLC
+Client PIN	: 100043191
+Created By	: Vinay
+Date		: 5/15/2026
+Case		: 18460607
+Description	: Package to remove duplicate data.
+/* Package is case specific */
+//END NOTES
+
+//SQL
+DELETE temp
+FROM   (SELECT *,
+               Row_number()
+                 OVER (
+                   ORDER BY hperson) AS ROW_NUM
+        FROM   optionsxref
+        WHERE  hperson = 372462
+               AND hoption in (259720)) AS temp
+WHERE  row_num > 1
+//END SQL

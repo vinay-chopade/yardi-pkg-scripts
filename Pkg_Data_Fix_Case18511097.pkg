@@ -1,0 +1,63 @@
+//NOTES
+Script Name	: Pkg_Data_Fix_Case18511097.pkg
+Client Name	: Lido Equities Management, Inc.
+Client PIN	: 100031359
+Created By	: Vinay C
+Date		: 5/26/2026
+Case		: 18511097
+Description	: Package to correct incorrect status of prospect and tenant.
+/* Package is case specific */
+//END NOTES
+
+//SQL
+SELECT * INTO backup_tenant_case18511097
+FROM tenant
+WHERE hmyperson = 2019 AND scode = 't0000539'
+
+DELETE t
+FROM tenant t
+INNER JOIN backup_tenant_case18511097 bt ON bt.hmyperson = t.hmyperson
+WHERE t.hmyperson = 2019 AND t.scode = 't0000539'
+
+SELECT * INTO backup_room_case18511097
+FROM room
+WHERE hmyperson = 2020 AND hmytenant = 2019
+
+DELETE r
+FROM room r
+INNER JOIN backup_room_case18511097 br ON br.hmyperson = r.hmyperson
+WHERE r.hmyperson = 2020 AND r.hmytenant = 2019
+
+
+SELECT * INTO backup_person_case18511097
+FROM person
+WHERE hmy IN (2020, 2019) AND ucode IN ('t0000539', 'r0000463')
+
+DELETE p
+FROM person p
+INNER JOIN backup_person_case18511097 bpe ON bpe.hmy = p.hmy
+WHERE p.hmy IN (2020, 2019) AND p.ucode IN ('t0000539', 'r0000463')
+
+
+SELECT * INTO backup_prospect1_case18511097
+FROM prospect
+WHERE hmy = 4848 AND scode = 'p0004849'
+
+UPDATE p
+SET p.dtapply = NULL,
+    p.htenant = 0,
+    p.ileasestep = 70
+FROM prospect p
+INNER JOIN backup_prospect1_case18511097 bpr ON bpr.hmy = p.hmy
+WHERE p.hmy = 4848 AND p.scode = 'p0004849'
+
+SELECT * INTO backup_prospect2_case18511097
+FROM prospect
+WHERE hmy = 4849 AND scode = 'p0004850' AND hRoommate=2020
+
+UPDATE p
+SET p.hroommate=0
+FROM prospect p
+INNER JOIN backup_prospect2_case18511097 bpr ON bpr.hmy = p.hmy
+WHERE p.hmy = 4849 AND p.scode = 'p0004850' AND p.hRoommate=2020
+//END SQL

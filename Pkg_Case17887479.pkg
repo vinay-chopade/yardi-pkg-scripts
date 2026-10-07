@@ -1,0 +1,19 @@
+//NOTES
+Script Name	: Pkg_Case17887479.pkg
+Client Name	: Tri City Rentals
+Client PIN	: 100030681
+Created By	: Vinay C
+Date		: 2/13/2026
+Case		: 17887479
+Description	: Package to remove sstatus of roommate.
+/* Package is case specific */
+//END NOTES
+
+//SQL
+update prospect 
+set sStatus  = NULL
+where hmy in (323131,329159 )
+and scode in ('p0340750','p0348166')
+and hparent in (329154,323033)
+and sStatus = 'Prospect'
+//END SQL

@@ -1,0 +1,26 @@
+//NOTES
+Script Name	: Pkg_Remove_Duplicate_Case18169365.pkg
+Client Name	: RMK Management Corp
+Client PIN	: 100035982
+Created By	: Vinay C
+Date		: 4/1/2026
+Case		: 18169365
+Description	: Package will remove duplicate session id's
+/* Package is case specific */
+//END NOTES
+
+//SQL
+SELECT *
+INTO backup_rescrmqueue_duplicate_sessionIDs_case18169365
+FROM (
+    SELECT 
+        *,
+        ROW_NUMBER() OVER (PARTITION BY ssessionid ORDER BY ssessionid) AS row_num
+    FROM 
+        rescrmqueue
+) AS CTE
+WHERE row_num > 1
+
+DELETE rq FROM rescrmqueue  rq
+inner join backup_rescrmqueue_duplicate_sessionIDs_case18169365 bak on bak.hmy=rq.hmy
+//END SQL

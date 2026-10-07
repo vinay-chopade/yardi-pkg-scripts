@@ -1,0 +1,40 @@
+//NOTES
+Script Name	: Pkg_Duplicate_Ysignature_Case18492025.pkg
+Client Name	: Bernstein Management Corporation
+Client PIN	: 100056610
+Created By	: Vinay C
+Date		: 5/21/2026
+Case		: 18492025
+Description	: Package to delete duplicate records in Ysignature table and to correct roommate data.
+/* Package is case specific */
+//END NOTES
+
+//SQL
+SELECT *
+INTO   backup_crmiq_ysignature_case18492025
+FROM   ysignature
+WHERE  hpmdoc = 2571172
+       AND hmy IN (109836)
+       AND bnsignature IS NULL
+
+DELETE ys FROM ysignature ys
+inner join backup_crmiq_ysignature_case18492025 bys
+on bys.hmy=ys.hmy
+WHERE  ys.hpmdoc = 2571172
+       AND ys.hmy IN (109836)
+       AND ys.bnsignature IS NULL
+
+SELECT *
+INTO   backup_crmiq_prospect_case18492025
+FROM   prospect
+WHERE  hmy IN (652704)
+       AND hroommate in (144997)
+
+UPDATE p
+SET    p.hroommate = NULL
+FROM   prospect p
+       INNER JOIN backup_crmiq_prospect_case18492025 bp
+               ON p.hmy = bp.hmy
+WHERE  p.hmy IN (652704)
+       AND p.hroommate in (144997)
+//END SQL

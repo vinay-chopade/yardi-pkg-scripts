@@ -1,0 +1,20 @@
+//NOTES
+Script Name	: Pkg_Update_Roommate_Case18419159.pkg
+Client Name	: Odin Properties LLC
+Client PIN	: 100053687
+Created By	: Vinay C
+Date		: 5/11/2026
+Case		: 18419159
+Description	: Package to update flag iOccupantAppForApprovedApplicationStatus for roommate.
+/* Package is case specific */
+//END NOTES
+
+//SQL
+UPDATE PROSPECT 
+SET IOCCUPANTAPPFORAPPROVEDAPPLICATIONSTATUS = 0
+WHERE HMY IN (1680644)
+	AND SCODE IN ('p1680342')
+	AND HROOMMATE IN (123108)
+	AND HPARENT IN (1680447)
+	AND IOCCUPANTAPPFORAPPROVEDAPPLICATIONSTATUS IN (4)
+//END SQL

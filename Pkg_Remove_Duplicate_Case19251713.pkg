@@ -1,0 +1,25 @@
+//NOTES
+Script Name	: Pkg_Remove_Duplicate_Case19251713.pkg
+Client Name	: Brookfield Properties Multifamily, LLC
+Client PIN	: 100118300
+Created By	: Vinay C
+Date		: 9/24/2026
+Case		: 19251713
+Description	: Package to remove duplicates from custom table.
+/* Package is case specific */
+//END NOTES
+
+//SQL
+DELETE gm
+FROM GUESTCARD_MILEASEAUDIT gm
+INNER JOIN Prospect p
+ON p.hmy = gm.hcode
+INNER JOIN Property pp
+ON p.hproperty = pp.hmy
+WHERE gm.hmy IN (
+SELECT MAX(gmm.hmy)
+FROM GUESTCARD_MILEASEAUDIT gmm
+GROUP BY gmm.hcode
+HAVING COUNT(*) > 1
+)
+//END SQL
